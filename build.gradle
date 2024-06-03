@@ -1,0 +1,110 @@
+import com.diffplug.spotless.LineEnding
+
+plugins {
+    id "java"
+    id "java-gradle-plugin"
+    id "groovy"
+    id "maven-publish"
+    id "com.diffplug.spotless" version "6.25.0"
+}
+
+repositories {
+    maven {
+        name "Quilt"
+        url "https://maven.quiltmc.org/repository/release/"
+    }
+    maven {
+        name "Fabric"
+        url "https://maven.fabricmc.net/"
+    }
+
+    mavenLocal()
+    mavenCentral()
+    gradlePluginPortal()
+}
+
+java {
+    withSourcesJar()
+
+    // Sets the Java version
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+dependencies {
+    // Gradle API
+    implementation(gradleApi())
+
+    // Access Wideners
+    implementation("net.fabricmc:access-widener:${fabric_accesswidener_version}")
+
+    // ASM
+    implementation("org.ow2.asm:asm:${asm_version}")
+    implementation("org.ow2.asm:asm-util:${asm_version}")       { transitive = false }
+    implementation("org.ow2.asm:asm-tree:${asm_version}")       { transitive = false }
+    implementation("org.ow2.asm:asm-analysis:${asm_version}")   { transitive = false }
+    implementation("org.ow2.asm:asm-commons:${asm_version}")    { transitive = false }
+
+    compileOnly("com.github.johnrengelman:shadow:8.1.1")
+}
+
+
+gradlePlugin {
+    plugins {
+        puzzleGradle {
+            id = "cr_puzzle_gradle"
+            implementationClass = "dev.crmodders.puzzle.CosmicPuzzlePlugin"
+        }
+    }
+}
+
+
+spotless {
+    lineEndings = LineEnding.UNIX
+
+    java {
+        trimTrailingWhitespace()
+        indentWithSpaces()
+        endWithNewline()
+    }
+}
+
+
+jar {
+    dependsOn spotlessApply // Apply spotless so stuff is consistent
+
+    from "license.txt"
+    manifest {
+        attributes(
+                "Specification-Title":   project.name,
+                "Specification-Vendor":  project.group,
+                "Specification-Version": project.version,
+        )
+    }
+}
+
+
+publishing {
+    repositories {
+        maven {
+            name = "crmPlugins"
+            url = "https://maven.crmodders.dev/plugins"
+            credentials{
+                username = System.getenv("CRMReleasesUsername")
+                password = System.getenv("CRMReleasesPassword")
+            }
+            authentication {
+                basic(BasicAuthentication)
+            }
+        }
+    }
+
+    publications {
+        maven(MavenPublication) {
+            groupId = group
+            artifactId = id
+
+            artifact sourcesJar
+        }
+    }
+}
