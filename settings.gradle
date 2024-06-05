@@ -1,3 +1,10 @@
-rootProject.name = "cr_puzzle_gradle"
+pluginManagement {
+    repositories {
+        maven { url "https://maven.crmodders.dev/plugins" }
+        maven { url "https://jitpack.io" }
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
 
-include("test")
+rootProject.name = "cr_puzzle_gradle"
