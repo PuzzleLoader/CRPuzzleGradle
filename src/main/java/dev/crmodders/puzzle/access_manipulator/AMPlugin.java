@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
-import java.nio.file.Files;
 
 public abstract class AMPlugin implements Runnable {
     private static final Logger LOGGER = LoggerFactory.getLogger(AMPlugin.class);
@@ -54,15 +53,6 @@ public abstract class AMPlugin implements Runnable {
                     LOGGER.error("Could not read AM file(s)", e);
                 }
             });
-
-
-            // Only transform the Cosmic Reach jar
-            // FIXME: Only transform CR jar, rather than every jar
-//            Configuration config = getConfigurations().getByName(Constants.Configurations.COSMIC_REACH);
-//            if (config.isCanBeResolved()) {
-//                System.out.println(config.getName());
-//                config.getAttributes().attribute(manipulated, true);
-//            }
 
             getConfigurations().all(config -> {
                 if (config.isCanBeResolved())
