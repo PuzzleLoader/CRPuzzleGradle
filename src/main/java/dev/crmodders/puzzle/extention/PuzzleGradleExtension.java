@@ -15,7 +15,19 @@ public interface PuzzleGradleExtension {
      * Sets the path to the projects Access Widener
      * @since 1.0.0
      */
-    RegularFileProperty getAccessWidenerPath();
+    RegularFileProperty getFabricAccessWidenerPath();
+
+    /**
+     * Sets the path to the projects Access Widener
+     * @since 1.0.0
+     */
+    RegularFileProperty getForgeAccessTransformerPath();
+
+    /**
+     * Sets the path to the projects Access Widener
+     * @since 1.0.25-dev
+     */
+    RegularFileProperty getAccessManipulatorPath();
 
     /**
      * Sets the directory of the game <br>

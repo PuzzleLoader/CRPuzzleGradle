@@ -1,6 +1,6 @@
 package dev.crmodders.puzzle;
 
-import dev.crmodders.puzzle.accesswidener.AWPlugin;
+import dev.crmodders.puzzle.access_manipulator.AMPlugin;
 import dev.crmodders.puzzle.configuration.PuzzleConfigurations;
 import dev.crmodders.puzzle.configuration.PuzzleRepositoriesPlugin;
 import dev.crmodders.puzzle.extention.PuzzleGradleExtension;
@@ -18,7 +18,7 @@ public class CosmicPuzzlePlugin implements Plugin<Project> {
     private static final List<Class<? extends Runnable>> SETUP_JOBS = List.of(
             PuzzleRepositoriesPlugin.class,
             PuzzleConfigurations.class,
-            AWPlugin.class,
+            AMPlugin.class,
             PuzzleTasks.class
     );
     /**
