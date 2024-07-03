@@ -10,12 +10,8 @@ plugins {
 
 repositories {
     maven {
-        name "Quilt"
-        url "https://maven.quiltmc.org/repository/release/"
-    }
-    maven {
-        name "Fabric"
-        url "https://maven.fabricmc.net/"
+        name "CrmReleases"
+        url "https://maven.crmodders.dev/releases"
     }
 
     mavenLocal()
@@ -35,15 +31,15 @@ dependencies {
     // Gradle API
     implementation(gradleApi())
 
-    // Access Wideners
-    implementation("net.fabricmc:access-widener:${fabric_accesswidener_version}")
-
     // ASM
     implementation("org.ow2.asm:asm:${asm_version}")
     implementation("org.ow2.asm:asm-util:${asm_version}")       { transitive = false }
     implementation("org.ow2.asm:asm-tree:${asm_version}")       { transitive = false }
     implementation("org.ow2.asm:asm-analysis:${asm_version}")   { transitive = false }
     implementation("org.ow2.asm:asm-commons:${asm_version}")    { transitive = false }
+
+    // Access Manipulators
+    implementation("dev.crmodders:access-manipulators:${access_manipulators_version}")
 
     compileOnly("com.github.johnrengelman:shadow:8.1.1")
 }
@@ -76,7 +72,7 @@ jar {
     from "license.txt"
     manifest {
         attributes(
-                "Specification-Title":   project.name,
+                "Specification-Title":   id,
                 "Specification-Vendor":  project.group,
                 "Specification-Version": project.version,
         )

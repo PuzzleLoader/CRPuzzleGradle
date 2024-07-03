@@ -46,21 +46,32 @@ public abstract class PuzzleRepositoriesPlugin implements Runnable {
         repos.mavenCentral();
     }
 
+    public void addImpl(String dep) {
+        getProject().getDependencies().add("compileOnly", dep);
+        getProject().getDependencies().add("runtimeOnly", dep);
+    }
+
     public void setupProjectDependencies() {
         // Cosmic Reach
         if (getProject().getProperties().get("cosmic-reach-version") != null) {
-            getProject().getDependencies().add("compileOnly", PuzzleGradleExtension.getCosmicReach((String) getProject().getProperties().get("cosmic-reach-version")));
-            getProject().getDependencies().add("runtimeOnly", PuzzleGradleExtension.getCosmicReach((String) getProject().getProperties().get("cosmic-reach-version")));
+            addImpl(PuzzleGradleExtension.getCosmicReach((String) getProject().getProperties().get("cosmic-reach-version")));
         }
 
         // Puzzle Loader
         if (getProject().getProperties().get("puzzle-loader-version") != null) {
-            getProject().getDependencies().add("compileOnly", PuzzleGradleExtension.getPuzzleLoader((String) getProject().getProperties().get("puzzle-loader-version")));
-            getProject().getDependencies().add("runtimeOnly", PuzzleGradleExtension.getPuzzleLoader((String) getProject().getProperties().get("puzzle-loader-version")));
+            addImpl(PuzzleGradleExtension.getPuzzleLoader((String) getProject().getProperties().get("puzzle-loader-version")));
         }
 
         // Mixins
-        getProject().getDependencies().add("compileOnly", "org.spongepowered:mixin:0.8.5");
-        getProject().getDependencies().add("runtimeOnly", "org.spongepowered:mixin:0.8.5");
+        addImpl("org.spongepowered:mixin:0.8.5");
+
+        addImpl("dev.crmodders:access-manipulators:1.0.1");
+
+        // Asm
+        addImpl("org.ow2.asm:asm:9.6");
+        addImpl("org.ow2.asm:asm-tree:9.6");
+        addImpl("org.ow2.asm:asm-util:9.6");
+        addImpl("org.ow2.asm:asm-analysis:9.6");
+        addImpl("org.ow2.asm:asm-commons:9.6");
     }
 }

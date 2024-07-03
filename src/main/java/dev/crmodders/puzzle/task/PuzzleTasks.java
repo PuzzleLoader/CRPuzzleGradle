@@ -10,6 +10,7 @@ import org.gradle.api.Project;
 import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.initialization.dsl.ScriptHandler;
+import org.gradle.api.plugins.internal.JavaPluginHelper;
 import org.gradle.api.tasks.SourceSetContainer;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.bundling.Jar;
@@ -40,8 +41,9 @@ public abstract class PuzzleTasks implements Runnable {
         getTasks().register("buildSlimJar", Jar.class, t -> {
             t.setGroup(Constants.Tasks.GROUP);
             t.from(getProject().getTasks().getByName("processResources").getOutputs().getFiles());
-            t.from(getProject().getExtensions().getByType(SourceSetContainer.class).getByName("main").getAllJava().getClassesDirectory());
+            t.from(JavaPluginHelper.getJavaComponent(getProject()).getMainFeature().getSourceSet().getOutput().getClassesDirs().getFiles());
 
+            t.getArchiveVersion().set(t.getArchiveVersion().get()+"-slim");
             t.setDescription("Builds a jar with no bundled dependencies");
         });
 
@@ -49,15 +51,17 @@ public abstract class PuzzleTasks implements Runnable {
             t.setGroup(Constants.Tasks.GROUP);
             t.setConfigurations(Collections.singletonList(getProject().getConfigurations().getByName("bundle")));
             t.from(getProject().getTasks().getByName("processResources").getOutputs().getFiles());
-            t.from(getProject().getExtensions().getByType(SourceSetContainer.class).getByName("main").getAllJava().getClassesDirectory());
+            t.from(JavaPluginHelper.getJavaComponent(getProject()).getMainFeature().getSourceSet().getOutput().getClassesDirs().getFiles());
 
+            t.getArchiveVersion().set(t.getArchiveVersion().get()+"-bundle");
             t.setDescription("Builds a jar with all of the dependencies bundled");
         });
 
         getTasks().register("buildSourcesJar", Jar.class, t -> {
             t.setGroup(Constants.Tasks.GROUP);
-            t.from(getProject().getExtensions().getByType(SourceSetContainer.class).getByName("main").getAllJava().getSourceDirectories());
+            t.from(JavaPluginHelper.getJavaComponent(getProject()).getMainFeature().getSourceSet().getAllJava());
 
+            t.getArchiveVersion().set(t.getArchiveVersion().get()+"-sources");
             t.setDescription("Builds a jar with no bundled dependencies");
         });
 
