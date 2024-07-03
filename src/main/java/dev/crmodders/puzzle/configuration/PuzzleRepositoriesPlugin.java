@@ -65,7 +65,7 @@ public abstract class PuzzleRepositoriesPlugin implements Runnable {
         // Mixins
         addImpl("org.spongepowered:mixin:0.8.5");
 
-        addImpl("dev.crmodders:access-manipulators:1.0.1");
+        addImpl("dev.crmodders:access-manipulators:1.0.2");
 
         // Asm
         addImpl("org.ow2.asm:asm:9.6");

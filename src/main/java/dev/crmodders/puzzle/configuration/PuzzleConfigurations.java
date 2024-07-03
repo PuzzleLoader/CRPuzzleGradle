@@ -37,38 +37,12 @@ public abstract class PuzzleConfigurations implements Runnable {
         return provider;
     }
 
-    private NamedDomainObjectProvider<Configuration> registerNonTransitive(String name, Role role) {
-        final NamedDomainObjectProvider<Configuration> provider = register(name, role);
-        provider.configure(configuration -> configuration.setTransitive(false));
-        return provider;
-    }
-
-
-    private void registerToClasspath(NamedDomainObjectProvider<Configuration> config) {
-        registerToClasspath(config.get());
-    }
-
-    private void registerToClasspath(Configuration config) {
-        getConfigurations().getByName("compileClasspath").extendsFrom(config);
-        getConfigurations().getByName("runtimeClasspath").extendsFrom(config);
-        getConfigurations().getByName("testCompileClasspath").extendsFrom(config);
-        getConfigurations().getByName("testRuntimeClasspath").extendsFrom(config);
-    }
-
-
-
-    /**
-     * Weather something is Consumable or Resolvable
-     * @see <a href="https://docs.gradle.org/7.5.1/userguide/declaring_dependencies.html#sec:resolvable-consumable-configs">Gradle Docs</a>
-     */
     enum Role {
         NONE(false, false),
         CONSUMABLE(true, false),
         RESOLVABLE(false, true);
 
-        // This configuration is an "outgoing" configuration, it's not meant to be resolved
         private final boolean canBeConsumed;
-        // As an outgoing configuration, explain that consumers may want to consume it
         private final boolean canBeResolved;
 
         Role(boolean canBeConsumed, boolean canBeResolved) {

@@ -18,8 +18,8 @@ public interface PuzzleGradleExtension {
     RegularFileProperty getFabricAccessWidenerPath();
 
     /**
-     * Sets the path to the projects Access Widener
-     * @since 1.0.0
+     * Sets the path to the projects Access Transformer
+     * @since 1.0.25-dev
      */
     RegularFileProperty getForgeAccessTransformerPath();
 
@@ -37,17 +37,6 @@ public interface PuzzleGradleExtension {
     RegularFileProperty getGameDir();
 
     /**
-     * Weather to use Quilt's development environment <br>
-     * Defaults to `true`, and should usually never be touched
-     * @see <a href="https://github.com/QuiltMC/quilt-loader/wiki/System-Properties#loaderdevelopment">Quilts docs on the development argument</a>
-     * @since 1.0.0
-     */
-    Property<Boolean> getUseDevelopmentRunEnvironment();
-
-
-
-
-    /**
      * Gets the Maven/Ivy formatted string to Cosmic Reach with the specified ${version}
      * @param ver Version of Cosmic Reach
      * @return Gradle dependency ready formatted string
@@ -58,8 +47,8 @@ public interface PuzzleGradleExtension {
     }
 
     /**
-     * Gets the Maven formatted string to Cosmic Quilt with the specified ${version}
-     * @param ver Version of Cosmic Quilt
+     * Gets the Maven formatted string to Puzzle Loader with the specified ${version}
+     * @param ver Version of PuzzleLoader
      * @return Gradle dependency ready formatted string
      * @since 1.0.0
      */

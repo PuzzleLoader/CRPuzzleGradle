@@ -21,22 +21,22 @@ public abstract class AMPlugin implements Runnable {
 
     @Override
     public void run() {
-        Attribute<Boolean> manipulated = Attribute.of("manipulated", Boolean.class);
+        Attribute<Boolean> transformed = Attribute.of("transformed", Boolean.class);
 
         getProject().afterEvaluate(proj -> {
             PuzzleGradleExtension extension = CosmicPuzzlePlugin.EXTENTION;
             if (!(extension.getAccessManipulatorPath().isPresent() || extension.getFabricAccessWidenerPath().isPresent() ||extension.getForgeAccessTransformerPath().isPresent()))
                 return;
 
-            proj.getDependencies().getAttributesSchema().attribute(manipulated);
+            proj.getDependencies().getAttributesSchema().attribute(transformed);
             proj.getDependencies().getArtifactTypes().getByName("jar", artifact -> {
-                artifact.getAttributes().attribute(manipulated, false);
+                artifact.getAttributes().attribute(transformed, false);
             });
 
 
             proj.getDependencies().registerTransform(AMTransformer.class, param -> {
-                param.getFrom().attribute(manipulated, false);
-                param.getTo().attribute(manipulated, true);
+                param.getFrom().attribute(transformed, false);
+                param.getTo().attribute(transformed, true);
 
                 param.parameters(parameters -> {
                     parameters.getAccessTransformer().set("E");
@@ -44,7 +44,6 @@ public abstract class AMPlugin implements Runnable {
                     parameters.getAccessTransformer().set("E");
                 });
 
-                // Read the access widener file
                 try {
                     if (extension.getFabricAccessWidenerPath().isPresent()) AccessManipulators.registerModifierFile(extension.getFabricAccessWidenerPath().getAsFile().get().getPath());
                     if (extension.getForgeAccessTransformerPath().isPresent()) AccessManipulators.registerModifierFile(extension.getForgeAccessTransformerPath().getAsFile().get().getPath());
@@ -56,7 +55,7 @@ public abstract class AMPlugin implements Runnable {
 
             getConfigurations().all(config -> {
                 if (config.isCanBeResolved())
-                    config.getAttributes().attribute(manipulated, true);
+                    config.getAttributes().attribute(transformed, true);
             });
         });
     }
