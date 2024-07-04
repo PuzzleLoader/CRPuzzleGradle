@@ -55,4 +55,14 @@ public interface PuzzleGradleExtension {
     static String getPuzzleLoader(String ver) {
         return "dev.crmodders:puzzle-loader:" + ver;
     }
+
+    /**
+     * Gets the Maven formatted string to Access Manipulators with the specified ${version}
+     * @param ver Version of Access Manipulators
+     * @return Gradle dependency ready formatted string
+     * @since 1.0.0
+     */
+    static String getAccessManipulators(String ver) {
+        return "dev.crmodders:access-manipulators:" + ver;
+    }
 }

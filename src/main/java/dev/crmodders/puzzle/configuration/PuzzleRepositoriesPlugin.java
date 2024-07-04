@@ -59,10 +59,13 @@ public abstract class PuzzleRepositoriesPlugin implements Runnable {
             addImpl(PuzzleGradleExtension.getPuzzleLoader((String) getProject().getProperties().get("puzzle-loader-version")));
         }
 
+        // Puzzle Loader
+        if (getProject().getProperties().get("puzzle-loader-version") != null) {
+            addImpl(PuzzleGradleExtension.getAccessManipulators((String) getProject().getProperties().get("access-manipulators-version")));
+        }
+
         // Mixins
         addImpl("org.spongepowered:mixin:0.8.5");
-
-        addImpl("dev.crmodders:access-manipulators:1.0.2");
 
         // Asm
         addImpl("org.ow2.asm:asm:9.6");
