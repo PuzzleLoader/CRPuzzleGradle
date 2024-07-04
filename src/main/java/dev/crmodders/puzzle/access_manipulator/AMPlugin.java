@@ -1,7 +1,6 @@
 package dev.crmodders.puzzle.access_manipulator;
 
 import dev.crmodders.puzzle.CosmicPuzzlePlugin;
-import dev.crmodders.puzzle.access_manipulators.AccessManipulators;
 import dev.crmodders.puzzle.extention.PuzzleGradleExtension;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.ConfigurationContainer;
@@ -37,9 +36,11 @@ public abstract class AMPlugin implements Runnable {
                 param.getTo().attribute(manipulated, true);
 
                 try {
-                    if (extension.getFabricAccessWidenerPath().isPresent()) AccessManipulators.registerModifierFile(extension.getFabricAccessWidenerPath().getAsFile().get().getPath());
-                    if (extension.getForgeAccessTransformerPath().isPresent()) AccessManipulators.registerModifierFile(extension.getForgeAccessTransformerPath().getAsFile().get().getPath());
-                    if (extension.getAccessManipulatorPath().isPresent()) AccessManipulators.registerModifierFile(extension.getAccessManipulatorPath().getAsFile().get().getPath());
+                    param.parameters(parameters -> {
+                        if (extension.getForgeAccessTransformerPath().isPresent()) parameters.getForgeAccessTransformerPath().set(extension.getForgeAccessTransformerPath().getAsFile().get().getPath());
+                        if (extension.getFabricAccessWidenerPath().isPresent()) parameters.getFabricAccessWidenerPath().set(extension.getFabricAccessWidenerPath().getAsFile().get().getPath());
+                        if (extension.getAccessManipulatorPath().isPresent()) parameters.getAccessManipulatorPath().set(extension.getAccessManipulatorPath().getAsFile().get().getPath());
+                    });
                 } catch (Exception e) {
                     LOGGER.error("Could not read AM file(s)", e);
                 }
