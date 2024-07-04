@@ -1,16 +1,12 @@
 package dev.crmodders.puzzle.access_manipulator;
 
 import dev.crmodders.puzzle.access_manipulators.AccessManipulators;
-import dev.crmodders.puzzle.access_manipulators.transformers.AccessManipulatorClassWriter;
 import org.gradle.api.artifacts.transform.InputArtifact;
 import org.gradle.api.artifacts.transform.TransformAction;
 import org.gradle.api.artifacts.transform.TransformOutputs;
 import org.gradle.api.artifacts.transform.TransformParameters;
 import org.gradle.api.file.FileSystemLocation;
-import org.gradle.api.provider.Property;
 import org.gradle.api.provider.Provider;
-import org.gradle.api.tasks.Input;
-import org.gradle.api.tasks.Optional;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -22,14 +18,7 @@ import java.util.zip.ZipOutputStream;
 
 public abstract class AMTransformer implements TransformAction<AMTransformer.parameters> {
 
-    public interface parameters extends TransformParameters {
-        @Input @Optional
-        Property<String> getAccessManipulator();
-        @Input @Optional
-        Property<String> getAccessWidener();
-        @Input @Optional
-        Property<String> getAccessTransformer();
-    }
+    public interface parameters extends TransformParameters {}
 
     @InputArtifact
     public abstract Provider<FileSystemLocation> getInputArtifact();

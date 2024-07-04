@@ -1,12 +1,9 @@
 package dev.crmodders.puzzle.configuration;
 
-import com.github.jengelman.gradle.plugins.shadow.ShadowJavaPlugin;
 import dev.crmodders.puzzle.Constants;
 import dev.crmodders.puzzle.extention.PuzzleGradleExtension;
 import org.gradle.api.Project;
-import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
-import org.gradle.api.initialization.dsl.ScriptHandler;
 
 import javax.inject.Inject;
 

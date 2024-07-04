@@ -5,7 +5,6 @@ import dev.crmodders.puzzle.CosmicPuzzlePlugin;
 import org.gradle.api.file.RegularFileProperty;
 import org.gradle.api.plugins.internal.JavaPluginHelper;
 import org.gradle.api.tasks.JavaExec;
-import org.gradle.api.tasks.SourceSetContainer;
 
 import java.io.File;
 import java.util.ArrayList;

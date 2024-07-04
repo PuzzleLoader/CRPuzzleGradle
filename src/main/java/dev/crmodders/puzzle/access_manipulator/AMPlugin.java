@@ -21,28 +21,20 @@ public abstract class AMPlugin implements Runnable {
 
     @Override
     public void run() {
-        Attribute<Boolean> transformed = Attribute.of("transformed", Boolean.class);
+        Attribute<Boolean> manipulated = Attribute.of("manipulated", Boolean.class);
 
         getProject().afterEvaluate(proj -> {
             PuzzleGradleExtension extension = CosmicPuzzlePlugin.EXTENTION;
-            if (!(extension.getAccessManipulatorPath().isPresent() || extension.getFabricAccessWidenerPath().isPresent() ||extension.getForgeAccessTransformerPath().isPresent()))
-                return;
 
-            proj.getDependencies().getAttributesSchema().attribute(transformed);
+            proj.getDependencies().getAttributesSchema().attribute(manipulated);
             proj.getDependencies().getArtifactTypes().getByName("jar", artifact -> {
-                artifact.getAttributes().attribute(transformed, false);
+                artifact.getAttributes().attribute(manipulated, false);
             });
 
 
             proj.getDependencies().registerTransform(AMTransformer.class, param -> {
-                param.getFrom().attribute(transformed, false);
-                param.getTo().attribute(transformed, true);
-
-                param.parameters(parameters -> {
-                    parameters.getAccessTransformer().set("E");
-                    parameters.getAccessWidener().set("E");
-                    parameters.getAccessTransformer().set("E");
-                });
+                param.getFrom().attribute(manipulated, false);
+                param.getTo().attribute(manipulated, true);
 
                 try {
                     if (extension.getFabricAccessWidenerPath().isPresent()) AccessManipulators.registerModifierFile(extension.getFabricAccessWidenerPath().getAsFile().get().getPath());
@@ -55,7 +47,7 @@ public abstract class AMPlugin implements Runnable {
 
             getConfigurations().all(config -> {
                 if (config.isCanBeResolved())
-                    config.getAttributes().attribute(transformed, true);
+                    config.getAttributes().attribute(manipulated, true);
             });
         });
     }

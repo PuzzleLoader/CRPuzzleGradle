@@ -1,10 +1,8 @@
 package dev.crmodders.puzzle.configuration;
 
-import dev.crmodders.puzzle.Constants;
 import org.gradle.api.NamedDomainObjectProvider;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
-import org.gradle.api.internal.artifacts.configurations.Configurations;
 
 import javax.inject.Inject;
 

@@ -21,6 +21,7 @@ public class CosmicPuzzlePlugin implements Plugin<Project> {
             AMPlugin.class,
             PuzzleTasks.class
     );
+
     /**
      * The extention containing the projects configs
      */

@@ -2,19 +2,12 @@ package dev.crmodders.puzzle.task;
 
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar;
 import dev.crmodders.puzzle.Constants;
-import dev.crmodders.puzzle.CosmicPuzzleInfo;
-import dev.crmodders.puzzle.extention.PuzzleGradleExtension;
 import dev.crmodders.puzzle.task.tasks.RunClientTask;
 import dev.crmodders.puzzle.task.tasks.RunUnmoddedClientTask;
 import org.gradle.api.Project;
-import org.gradle.api.artifacts.dsl.DependencyHandler;
-import org.gradle.api.artifacts.dsl.RepositoryHandler;
-import org.gradle.api.initialization.dsl.ScriptHandler;
 import org.gradle.api.plugins.internal.JavaPluginHelper;
-import org.gradle.api.tasks.SourceSetContainer;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.bundling.Jar;
-import org.gradle.language.jvm.tasks.ProcessResources;
 
 import javax.inject.Inject;
 import java.util.Collections;

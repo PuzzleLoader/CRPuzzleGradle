@@ -8,7 +8,7 @@ import org.gradle.api.provider.Property;
  */
 public interface PuzzleGradleExtension {
     /** Name of the extension */
-    public static String NAME = "puzzle_loader";
+    static String NAME = "puzzle_loader";
 
 
     /**
@@ -42,7 +42,7 @@ public interface PuzzleGradleExtension {
      * @return Gradle dependency ready formatted string
      * @since 1.0.0
      */
-    public static String getCosmicReach(String ver) {
+    static String getCosmicReach(String ver) {
         return "finalforeach:cosmicreach:" + ver;
     }
 
@@ -52,7 +52,7 @@ public interface PuzzleGradleExtension {
      * @return Gradle dependency ready formatted string
      * @since 1.0.0
      */
-    public static String getPuzzleLoader(String ver) {
+    static String getPuzzleLoader(String ver) {
         return "dev.crmodders:puzzle-loader:" + ver;
     }
 }
