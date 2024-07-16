@@ -1,6 +1,7 @@
 package dev.crmodders.puzzle.access_manipulator;
 
 import dev.crmodders.puzzle.CosmicPuzzlePlugin;
+import dev.crmodders.puzzle.access_manipulators.AccessManipulators;
 import dev.crmodders.puzzle.extention.PuzzleGradleExtension;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.ConfigurationContainer;
@@ -36,6 +37,11 @@ public abstract class AMPlugin implements Runnable {
                 param.getTo().attribute(manipulated, true);
 
                 try {
+                    AccessManipulators.classesToModify.clear();
+                    AccessManipulators.fieldsToModify.clear();
+                    AccessManipulators.methodsToModify.clear();
+                    AccessManipulators.classesToModify.clear();
+
                     param.parameters(parameters -> {
                         if (extension.getForgeAccessTransformerPath().isPresent()) parameters.getForgeAccessTransformerPath().set(extension.getForgeAccessTransformerPath().getAsFile().get().getPath());
                         if (extension.getFabricAccessWidenerPath().isPresent()) parameters.getFabricAccessWidenerPath().set(extension.getFabricAccessWidenerPath().getAsFile().get().getPath());
