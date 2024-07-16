@@ -43,6 +43,9 @@ public abstract class AMPlugin implements Runnable {
                     });
                 } catch (Exception e) {
                     LOGGER.error("Could not read AM file(s)", e);
+                    param.getParameters().getForgeAccessTransformerPath().set("");
+                    param.getParameters().getFabricAccessWidenerPath().set("");
+                    param.getParameters().getAccessManipulatorPath().set("");
                 }
             });
 
