@@ -1,11 +1,12 @@
 package dev.crmodders.puzzle.accessmanipulator;
 
 import dev.crmodders.puzzle.CosmicPuzzlePlugin;
-import dev.crmodders.puzzle.access_manipulators.AccessManipulators;
 import dev.crmodders.puzzle.extention.PuzzleGradleExtension;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.attributes.Attribute;
+import org.gradle.api.internal.model.DefaultObjectFactory;
+import org.gradle.api.provider.ListProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,7 +43,7 @@ public abstract class AMPlugin implements Runnable {
 
                 try {
 
-                    List<String> manipulators = new ArrayList<>();
+                    ListProperty<String> manipulators = this.getProject().getObjects().listProperty(String.class);
 
                     param.parameters(parameters -> {
                         if (extension.getForgeAccessTransformerPath().isPresent())
@@ -56,7 +57,7 @@ public abstract class AMPlugin implements Runnable {
                     });
                 } catch (Exception e) {
                     LOGGER.error("Could not read AM file(s)", e);
-                    param.getParameters().getAccessManipulatorPaths().set(new ArrayList<>());
+                    param.getParameters().getAccessManipulatorPaths().set(this.getProject().getObjects().listProperty(String.class));
                 }
             });
 
