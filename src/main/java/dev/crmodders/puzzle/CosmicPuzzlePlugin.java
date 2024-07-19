@@ -1,6 +1,6 @@
 package dev.crmodders.puzzle;
 
-import dev.crmodders.puzzle.access_manipulator.AMPlugin;
+import dev.crmodders.puzzle.accessmanipulator.AMPlugin;
 import dev.crmodders.puzzle.configuration.PuzzleConfigurations;
 import dev.crmodders.puzzle.configuration.PuzzleRepositoriesPlugin;
 import dev.crmodders.puzzle.extention.PuzzleGradleExtension;

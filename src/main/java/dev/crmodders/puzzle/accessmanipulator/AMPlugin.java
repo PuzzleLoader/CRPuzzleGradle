@@ -1,4 +1,4 @@
-package dev.crmodders.puzzle.access_manipulator;
+package dev.crmodders.puzzle.accessmanipulator;
 
 import dev.crmodders.puzzle.CosmicPuzzlePlugin;
 import dev.crmodders.puzzle.access_manipulators.AccessManipulators;
@@ -10,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class AMPlugin implements Runnable {
     private static final Logger LOGGER = LoggerFactory.getLogger(AMPlugin.class);
@@ -23,6 +25,8 @@ public abstract class AMPlugin implements Runnable {
     public void run() {
         Attribute<Boolean> manipulated = Attribute.of("manipulated", Boolean.class);
 
+        getProject().
+
         getProject().afterEvaluate(proj -> {
             PuzzleGradleExtension extension = CosmicPuzzlePlugin.EXTENTION;
 
@@ -32,26 +36,27 @@ public abstract class AMPlugin implements Runnable {
             });
 
 
-            proj.getDependencies().registerTransform(AMTransformer.class, param -> {
+            proj.getDependencies().registerTransform(AMClassTransformer.class, param -> {
                 param.getFrom().attribute(manipulated, false);
                 param.getTo().attribute(manipulated, true);
 
                 try {
-                    AccessManipulators.classesToModify.clear();
-                    AccessManipulators.fieldsToModify.clear();
-                    AccessManipulators.methodsToModify.clear();
-                    AccessManipulators.classesToModify.clear();
+
+                    List<String> manipulators = new ArrayList<>();
 
                     param.parameters(parameters -> {
-                        if (extension.getForgeAccessTransformerPath().isPresent()) parameters.getForgeAccessTransformerPath().set(extension.getForgeAccessTransformerPath().getAsFile().get().getPath());
-                        if (extension.getFabricAccessWidenerPath().isPresent()) parameters.getFabricAccessWidenerPath().set(extension.getFabricAccessWidenerPath().getAsFile().get().getPath());
-                        if (extension.getAccessManipulatorPath().isPresent()) parameters.getAccessManipulatorPath().set(extension.getAccessManipulatorPath().getAsFile().get().getPath());
+                        if (extension.getForgeAccessTransformerPath().isPresent())
+                            manipulators.add(extension.getForgeAccessTransformerPath().get().getAsFile().getAbsolutePath());
+                        if (extension.getFabricAccessWidenerPath().isPresent())
+                            manipulators.add(extension.getFabricAccessWidenerPath().get().getAsFile().getAbsolutePath());
+                        if (extension.getAccessManipulatorPath().isPresent())
+                            manipulators.add(extension.getAccessManipulatorPath().get().getAsFile().getAbsolutePath());
+
+                        parameters.getAccessManipulatorPaths().set(manipulators);
                     });
                 } catch (Exception e) {
                     LOGGER.error("Could not read AM file(s)", e);
-                    param.getParameters().getForgeAccessTransformerPath().set("");
-                    param.getParameters().getFabricAccessWidenerPath().set("");
-                    param.getParameters().getAccessManipulatorPath().set("");
+                    param.getParameters().getAccessManipulatorPaths().set(new ArrayList<>());
                 }
             });
 
