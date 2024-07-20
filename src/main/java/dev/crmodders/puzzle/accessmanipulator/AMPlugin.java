@@ -5,14 +5,12 @@ import dev.crmodders.puzzle.extention.PuzzleGradleExtension;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.attributes.Attribute;
-import org.gradle.api.internal.model.DefaultObjectFactory;
 import org.gradle.api.provider.ListProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
 
 public abstract class AMPlugin implements Runnable {
     private static final Logger LOGGER = LoggerFactory.getLogger(AMPlugin.class);
@@ -41,23 +39,21 @@ public abstract class AMPlugin implements Runnable {
                 param.getFrom().attribute(manipulated, false);
                 param.getTo().attribute(manipulated, true);
 
+                ListProperty<File> manipulators = this.getProject().getObjects().listProperty(File.class);
                 try {
-
-                    ListProperty<String> manipulators = this.getProject().getObjects().listProperty(String.class);
-
                     param.parameters(parameters -> {
                         if (extension.getForgeAccessTransformerPath().isPresent())
-                            manipulators.add(extension.getForgeAccessTransformerPath().get().getAsFile().getAbsolutePath());
+                            manipulators.add(extension.getForgeAccessTransformerPath().get().getAsFile());
                         if (extension.getFabricAccessWidenerPath().isPresent())
-                            manipulators.add(extension.getFabricAccessWidenerPath().get().getAsFile().getAbsolutePath());
+                            manipulators.add(extension.getFabricAccessWidenerPath().get().getAsFile());
                         if (extension.getAccessManipulatorPath().isPresent())
-                            manipulators.add(extension.getAccessManipulatorPath().get().getAsFile().getAbsolutePath());
+                            manipulators.add(extension.getAccessManipulatorPath().get().getAsFile());
 
                         parameters.getAccessManipulatorPaths().set(manipulators);
                     });
                 } catch (Exception e) {
                     LOGGER.error("Could not read AM file(s)", e);
-                    param.getParameters().getAccessManipulatorPaths().set(this.getProject().getObjects().listProperty(String.class));
+                    param.getParameters().getAccessManipulatorPaths().set(manipulators);
                 }
             });
 

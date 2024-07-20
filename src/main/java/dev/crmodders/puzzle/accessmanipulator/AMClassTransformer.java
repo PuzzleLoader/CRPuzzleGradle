@@ -6,13 +6,12 @@ import org.gradle.api.artifacts.transform.TransformAction;
 import org.gradle.api.artifacts.transform.TransformOutputs;
 import org.gradle.api.artifacts.transform.TransformParameters;
 import org.gradle.api.file.FileSystemLocation;
+import org.gradle.api.provider.ListProperty;
 import org.gradle.api.provider.Property;
 import org.gradle.api.provider.Provider;
 import org.gradle.api.tasks.Input;
-import org.gradle.internal.Pair;
 
 import java.io.*;
-import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
@@ -21,7 +20,7 @@ public abstract class AMClassTransformer implements TransformAction<AMClassTrans
 
     public interface AMClassParameters extends TransformParameters {
         @Input
-        Property<List<String>> getAccessManipulatorPaths();
+        ListProperty<File> getAccessManipulatorPaths();
     }
 
     @InputArtifact
@@ -40,26 +39,24 @@ public abstract class AMClassTransformer implements TransformAction<AMClassTrans
 
         clearManipulatorCaches();
 
-        for (String manipulatorPath : getParameters().getAccessManipulatorPaths().get()) {
-            AccessManipulators.registerModifierFile(manipulatorPath);
+        for (File manipulatorPath : getParameters().getAccessManipulatorPaths().get()) {
+            AccessManipulators.registerModifierFile(manipulatorPath.getPath());
         }
 
         try {
             ZipInputStream inputJar = new ZipInputStream(new FileInputStream(input));
             File transformedFile = outputs.file("manipulated-"+input.getName());
+            if (transformedFile.exists()) transformedFile.delete();
             ZipOutputStream outputJar = new ZipOutputStream(new FileOutputStream(
                     transformedFile
             ));
-            if (transformedFile.exists()) {
-                transformedFile.delete();
-            }
 
             ZipEntry currentEntry = inputJar.getNextEntry();
             while (currentEntry != null) {
                 outputJar.putNextEntry(currentEntry);
 
                 String entryName = currentEntry.getName();
-                if (AccessManipulators.classesToModify.containsKey(entryName))
+                if (entryName.endsWith(".class") && AccessManipulators.affectedClasses.contains(entryName))
                     outputJar.write(AccessManipulators.transformClass(entryName.replaceAll("\\.class", ""), inputJar.readAllBytes()));
                 else
                     outputJar.write(inputJar.readAllBytes());
