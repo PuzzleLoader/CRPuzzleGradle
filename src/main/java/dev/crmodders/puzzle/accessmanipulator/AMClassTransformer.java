@@ -46,7 +46,7 @@ public abstract class AMClassTransformer implements TransformAction<AMClassTrans
         try {
             ZipInputStream inputJar = new ZipInputStream(new FileInputStream(input));
             File transformedFile = outputs.file("manipulated-"+input.getName());
-            if (transformedFile.exists()) transformedFile.delete();
+            if (transformedFile != null && transformedFile.exists()) transformedFile.delete();
             ZipOutputStream outputJar = new ZipOutputStream(new FileOutputStream(
                     transformedFile
             ));
