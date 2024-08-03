@@ -1,7 +1,7 @@
-package dev.crmodders.puzzle.configuration;
+package com.github.puzzle.configuration;
 
-import dev.crmodders.puzzle.Constants;
-import dev.crmodders.puzzle.extention.PuzzleGradleExtension;
+import com.github.puzzle.Constants;
+import com.github.puzzle.extention.PuzzleGradleExtension;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 

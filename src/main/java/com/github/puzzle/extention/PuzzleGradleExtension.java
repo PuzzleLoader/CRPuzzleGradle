@@ -1,7 +1,6 @@
-package dev.crmodders.puzzle.extention;
+package com.github.puzzle.extention;
 
 import org.gradle.api.file.RegularFileProperty;
-import org.gradle.api.provider.Property;
 
 /**
  * The public api exposed to build scripts
@@ -53,7 +52,7 @@ public interface PuzzleGradleExtension {
      * @since 1.0.0
      */
     static String getPuzzleLoader(String ver) {
-        return "dev.crmodders:puzzle-loader:" + ver;
+        return "io.github:puzzle-loader:" + ver;
     }
 
     /**
@@ -63,6 +62,6 @@ public interface PuzzleGradleExtension {
      * @since 1.0.0
      */
     static String getAccessManipulators(String ver) {
-        return "dev.crmodders:access-manipulators:" + ver;
+        return "io.github:access-manipulators:" + ver;
     }
 }

@@ -9,14 +9,10 @@ plugins {
 }
 
 repositories {
-    maven {
-        name "CrmReleases"
-        url "https://maven.crmodders.dev/releases"
-    }
-
     mavenLocal()
     mavenCentral()
     gradlePluginPortal()
+    maven { url 'https://jitpack.io' }
 }
 
 java {
@@ -39,7 +35,7 @@ dependencies {
     implementation("org.ow2.asm:asm-commons:${asm_version}")    { transitive = false }
 
     // Access Manipulators
-    implementation("dev.crmodders:access-manipulators:${access_manipulators_version}")
+    implementation("com.github.PuzzleLoader:access_manipulators:${access_manipulators_version}")
 
     compileOnly("com.github.johnrengelman:shadow:8.1.1")
 }
@@ -49,7 +45,7 @@ gradlePlugin {
     plugins {
         puzzleGradle {
             id = "cr_puzzle_gradle"
-            implementationClass = "dev.crmodders.puzzle.CosmicPuzzlePlugin"
+            implementationClass = "com.github.puzzle.CosmicPuzzlePlugin"
         }
     }
 }
@@ -81,26 +77,17 @@ jar {
 
 
 publishing {
-    repositories {
-        maven {
-            name = "crmPlugins"
-            url = "https://maven.crmodders.dev/plugins"
-            credentials{
-                username = System.getenv("CRMReleasesUsername")
-                password = System.getenv("CRMReleasesPassword")
-            }
-            authentication {
-                basic(BasicAuthentication)
-            }
-        }
-    }
-
     publications {
         maven(MavenPublication) {
             groupId = group
             artifactId = id
 
-            artifact sourcesJar
+            artifact source: jar, classifier: '', extension: 'jar'
         }
     }
+}
+
+wrapper {
+    gradleVersion = "8.5"
+    distributionType = Wrapper.DistributionType.ALL
 }

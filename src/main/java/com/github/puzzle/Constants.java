@@ -1,4 +1,4 @@
-package dev.crmodders.puzzle;
+package com.github.puzzle;
 
 import org.objectweb.asm.Opcodes;
 
@@ -10,8 +10,8 @@ public class Constants {
             "https://jitpack.io", // Jitpack
             "https://maven.quiltmc.org/repository/release", // Quilt
             "https://maven.fabricmc.net/", // Fabric
-            "https://repo.spongepowered.org/maven/", // Sponge
-            "https://maven.crmodders.dev/releases" // CRModders
+            "https://repo.spongepowered.org/maven/" // Sponge
+//            "https://maven.crmodders.dev/releases" // CRModders
     };
 
 

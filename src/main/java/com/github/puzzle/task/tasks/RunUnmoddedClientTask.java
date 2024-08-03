@@ -1,7 +1,7 @@
-package dev.crmodders.puzzle.task.tasks;
+package com.github.puzzle.task.tasks;
 
-import dev.crmodders.puzzle.Constants;
-import dev.crmodders.puzzle.CosmicPuzzlePlugin;
+import com.github.puzzle.Constants;
+import com.github.puzzle.CosmicPuzzlePlugin;
 import org.gradle.api.file.RegularFileProperty;
 import org.gradle.api.plugins.internal.JavaPluginHelper;
 import org.gradle.api.tasks.JavaExec;

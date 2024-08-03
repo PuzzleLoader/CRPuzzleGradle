@@ -1,10 +1,10 @@
-package dev.crmodders.puzzle;
+package com.github.puzzle;
 
-import dev.crmodders.puzzle.accessmanipulator.AMPlugin;
-import dev.crmodders.puzzle.configuration.PuzzleConfigurations;
-import dev.crmodders.puzzle.configuration.PuzzleRepositoriesPlugin;
-import dev.crmodders.puzzle.extention.PuzzleGradleExtension;
-import dev.crmodders.puzzle.task.PuzzleTasks;
+import com.github.puzzle.accessmanipulator.AMPlugin;
+import com.github.puzzle.configuration.PuzzleConfigurations;
+import com.github.puzzle.configuration.PuzzleRepositoriesPlugin;
+import com.github.puzzle.extention.PuzzleGradleExtension;
+import com.github.puzzle.task.PuzzleTasks;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.logging.Logger;
@@ -36,7 +36,9 @@ public class CosmicPuzzlePlugin implements Plugin<Project> {
         EXTENTION = project.getExtensions().create(PuzzleGradleExtension.NAME, PuzzleGradleExtension.class);
 
         for (Class<? extends Runnable> jobClass : SETUP_JOBS) {
+            System.out.println("Starting JobClass \"" + jobClass.getName() + "\"");
             project.getObjects().newInstance(jobClass).run();
+            System.out.println("Finished Job");
         }
     }
 }

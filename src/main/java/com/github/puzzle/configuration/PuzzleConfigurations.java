@@ -1,4 +1,4 @@
-package dev.crmodders.puzzle.configuration;
+package com.github.puzzle.configuration;
 
 import org.gradle.api.NamedDomainObjectProvider;
 import org.gradle.api.artifacts.Configuration;
@@ -6,21 +6,24 @@ import org.gradle.api.artifacts.ConfigurationContainer;
 
 import javax.inject.Inject;
 
-public abstract class PuzzleConfigurations implements Runnable {
+public abstract class  PuzzleConfigurations implements Runnable {
     @Inject
     protected abstract ConfigurationContainer getConfigurations();
 
-
     @Override
     public void run() {
-        Configuration BundleConfiguration = register("bundle", Role.RESOLVABLE).get();
-        getConfigurations().getByName("api").extendsFrom(BundleConfiguration);
+        Configuration CompileOnly = getConfigurations().getByName("compileOnly");
+
+        Configuration BundleConfiguration = register("bundle", Role.CONSUMEANDRESOLE).get();
+        BundleConfiguration.setDescription("Make this dependency included in your mod jar");
+        getConfigurations().getByName("implementation").extendsFrom(BundleConfiguration);
 
         Configuration ModConfiguration = registerInvisible("mod", Role.NONE).get();
-        getConfigurations().add(ModConfiguration);
+        ModConfiguration.setDescription("This dependency is considered a mod");
+        CompileOnly.extendsFrom(ModConfiguration);
 
         Configuration InternalConfiguration = registerInvisible("internal", Role.NONE).get();
-        getConfigurations().add(InternalConfiguration);
+        CompileOnly.extendsFrom(InternalConfiguration);
     }
 
 
@@ -35,10 +38,17 @@ public abstract class PuzzleConfigurations implements Runnable {
         return provider;
     }
 
+    private NamedDomainObjectProvider<Configuration> registerTransitive(String name, Role role) {
+        final NamedDomainObjectProvider<Configuration> provider = register(name, role);
+        provider.configure(configuration -> configuration.setTransitive(false));
+        return provider;
+    }
+
     enum Role {
         NONE(false, false),
         CONSUMABLE(true, false),
-        RESOLVABLE(false, true);
+        RESOLVABLE(false, true),
+        CONSUMEANDRESOLE(true, true);
 
         private final boolean canBeConsumed;
         private final boolean canBeResolved;

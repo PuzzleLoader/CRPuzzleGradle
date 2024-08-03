@@ -1,7 +1,7 @@
-package dev.crmodders.puzzle.task.tasks;
+package com.github.puzzle.task.tasks;
 
-import dev.crmodders.puzzle.Constants;
-import dev.crmodders.puzzle.CosmicPuzzlePlugin;
+import com.github.puzzle.Constants;
+import com.github.puzzle.CosmicPuzzlePlugin;
 import org.gradle.api.file.RegularFileProperty;
 import org.gradle.api.plugins.internal.JavaPluginHelper;
 import org.gradle.api.tasks.JavaExec;
@@ -20,13 +20,12 @@ public abstract class RunClientTask extends JavaExec {
         dependsOn(getProject().getTasks().getByName("compileJava"));
         dependsOn(getProject().getTasks().getByName("processResources"));
         dependsOn(getProject().getTasks().getByName("classes"));
-        dependsOn(getProject().getTasks().getByName("buildSlimJar"));
 
         Set<File> files = new HashSet<>();
         files.addAll(JavaPluginHelper.getJavaComponent(getProject()).getMainFeature().getSourceSet().getRuntimeClasspath().getFiles());
         classpath(files);
 
-        getMainClass().set("dev.crmodders.puzzle.core.launch.Piece");
+        getMainClass().set("com.github.puzzle.loader.launch.Piece");
     }
 
     @Override

@@ -1,6 +1,6 @@
-package dev.crmodders.puzzle.task.abstracts;
+package com.github.puzzle.task.abstracts;
 
-import dev.crmodders.puzzle.Constants;
+import com.github.puzzle.Constants;
 import org.gradle.api.DefaultTask;
 
 public abstract class AbstractPuzzleTask extends DefaultTask {

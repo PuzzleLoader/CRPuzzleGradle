@@ -1,4 +1,4 @@
-package dev.crmodders.puzzle;
+package com.github.puzzle;
 
 import org.gradle.internal.impldep.org.junit.platform.commons.logging.LoggerFactory;
 
@@ -15,7 +15,7 @@ public class CosmicPuzzleInfo {
     static {
         // Defaults if nothing is found
         String name = "Cosmic Reach Puzzle Gradle";
-        String group = "dev.crmodders";
+        String group = "io.github";
         String version = "0.0.0";
 
         try {
