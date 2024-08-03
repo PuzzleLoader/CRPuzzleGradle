@@ -52,7 +52,7 @@ public interface PuzzleGradleExtension {
      * @since 1.0.0
      */
     static String getPuzzleLoader(String ver) {
-        return "io.github:puzzle-loader:" + ver;
+        return "com.github.PuzzleLoader:PuzzleLoader:" + ver;
     }
 
     /**
@@ -62,6 +62,6 @@ public interface PuzzleGradleExtension {
      * @since 1.0.0
      */
     static String getAccessManipulators(String ver) {
-        return "io.github:access-manipulators:" + ver;
+        return "com.github.PuzzleLoader:access_manipulators:" + ver;
     }
 }
