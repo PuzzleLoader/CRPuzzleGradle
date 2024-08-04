@@ -50,18 +50,19 @@ public abstract class AMClassTransformer implements TransformAction<AMClassTrans
         }
 
         File input = getInputArtifact().get().getAsFile();
-        File transformedFile = outputs.file(input.getName().replaceAll("\\.jar", ".transformed.jar"));
+        String transformedName = input.getName().replaceAll("\\.jar", ".transformed.jar");
         if (!AMPlugin.hasManipulators) {
-            transformedFile = outputs.file(input.getName());
+            transformedName = input.getName();
         }
 
-        if (input.getName().equals(transformedFile.getName()))
-            System.out.println("Transforming File " + input.getName() + " -> " + transformedFile.getName());
+        if (input.getName().equals(transformedName))
+            System.out.println("Transforming File " + input.getName() + " -> " + transformedName);
         else
             System.out.println("Ignoring File " + input.getName());
 
         try {
             ZipInputStream inputJar = new ZipInputStream(new FileInputStream(input));
+            File transformedFile = outputs.file(transformedName);
             if (transformedFile.exists()) transformedFile.delete();
             ZipOutputStream outputJar = new ZipOutputStream(new FileOutputStream(
                     transformedFile
