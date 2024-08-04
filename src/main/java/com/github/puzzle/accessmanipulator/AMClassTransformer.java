@@ -44,6 +44,8 @@ public abstract class AMClassTransformer implements TransformAction<AMClassTrans
     public static File transformJar(Project project, File file) {
         if (!file.getName().endsWith(".jar")) return file;
         try {
+            if (!AMPlugin.hasManipulators) return file;
+
             ZipInputStream inputJar = new ZipInputStream(new FileInputStream(file));
 
             File puzzleCache = new File(project.getProjectDir().getAbsolutePath() + "/.gradle/puzzle-cache/");

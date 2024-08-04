@@ -20,18 +20,26 @@ public abstract class AMPlugin implements Runnable {
     @Inject
     protected abstract ConfigurationContainer getConfigurations();
 
+    public static boolean hasManipulators = false;
+
     @Override
     public void run() {
         Attribute<Boolean> manipulated = Attribute.of("manipulated", Boolean.class);
 
-        if (CosmicPuzzlePlugin.EXTENTION.getFabricAccessWidenerPath().isPresent())
+        if (CosmicPuzzlePlugin.EXTENTION.getFabricAccessWidenerPath().isPresent()) {
             getProject().evaluationDependsOn(CosmicPuzzlePlugin.EXTENTION.getFabricAccessWidenerPath().getAsFile().get().getAbsolutePath());
+            hasManipulators = true;
+        }
 
-        if (CosmicPuzzlePlugin.EXTENTION.getForgeAccessTransformerPath().isPresent())
+        if (CosmicPuzzlePlugin.EXTENTION.getForgeAccessTransformerPath().isPresent()) {
             getProject().evaluationDependsOn(CosmicPuzzlePlugin.EXTENTION.getForgeAccessTransformerPath().getAsFile().get().getAbsolutePath());
+            hasManipulators = true;
+        }
 
-        if (CosmicPuzzlePlugin.EXTENTION.getAccessManipulatorPath().isPresent())
+        if (CosmicPuzzlePlugin.EXTENTION.getAccessManipulatorPath().isPresent()) {
             getProject().evaluationDependsOn(CosmicPuzzlePlugin.EXTENTION.getAccessManipulatorPath().getAsFile().get().getAbsolutePath());
+            hasManipulators = true;
+        }
 
         getProject().afterEvaluate(proj -> {
 
