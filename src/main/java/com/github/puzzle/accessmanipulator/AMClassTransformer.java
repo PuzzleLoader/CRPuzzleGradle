@@ -41,43 +41,6 @@ public abstract class AMClassTransformer implements TransformAction<AMClassTrans
         return configuration.getFiles().contains(file);
     }
 
-    public static File transformJar(Project project, File file) {
-        if (!file.getName().endsWith(".jar")) return file;
-        try {
-            if (!AMPlugin.hasManipulators) return file;
-
-            ZipInputStream inputJar = new ZipInputStream(new FileInputStream(file));
-
-            File puzzleCache = new File(project.getProjectDir().getAbsolutePath() + "/.gradle/puzzle-cache/");
-            if (!puzzleCache.exists()) puzzleCache.mkdirs();
-            File transformedFile = new File(project.getProjectDir().getAbsolutePath() + "/.gradle/puzzle-cache/" + file.getName().replaceAll("\\.jar", ".transformed.jar"));
-            if (transformedFile.exists()) transformedFile.delete();
-            ZipOutputStream outputJar = new ZipOutputStream(new FileOutputStream(
-                    transformedFile
-            ));
-
-            ZipEntry currentEntry = inputJar.getNextEntry();
-            while (currentEntry != null) {
-                outputJar.putNextEntry(currentEntry);
-
-                String entryName = currentEntry.getName();
-                if (entryName.endsWith(".class") && AccessManipulators.affectedClasses.contains(entryName))
-                    outputJar.write(AccessManipulators.transformClass(entryName.replaceAll("\\.class", ""), inputJar.readAllBytes()));
-                else
-                    outputJar.write(inputJar.readAllBytes());
-
-                currentEntry = inputJar.getNextEntry();
-            }
-
-            inputJar.close();
-            outputJar.close();
-
-            return transformedFile;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     @Override
     public void transform(TransformOutputs outputs) {
         clearManipulatorCaches();
@@ -87,6 +50,11 @@ public abstract class AMClassTransformer implements TransformAction<AMClassTrans
         }
 
         File input = getInputArtifact().get().getAsFile();
+        if (!AMPlugin.hasManipulators) {
+            outputs.file(input.getName());
+            return;
+        }
+
         System.out.println("Transforming File " + input.getName());
 
         try {
