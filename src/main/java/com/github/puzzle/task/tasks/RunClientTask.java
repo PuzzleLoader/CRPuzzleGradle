@@ -22,6 +22,7 @@ public abstract class RunClientTask extends JavaExec {
         dependsOn(getProject().getTasks().getByName("classes"));
 
         Set<File> files = new HashSet<>();
+        files.addAll(JavaPluginHelper.getJavaComponent(getProject()).getMainFeature().getSourceSet().getCompileClasspath().getFiles());
         files.addAll(JavaPluginHelper.getJavaComponent(getProject()).getMainFeature().getSourceSet().getRuntimeClasspath().getFiles());
         classpath(files);
 
