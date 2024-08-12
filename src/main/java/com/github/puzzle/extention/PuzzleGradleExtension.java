@@ -42,7 +42,7 @@ public interface PuzzleGradleExtension {
      * @since 1.0.0
      */
     static String getCosmicReach(String ver) {
-        return "finalforeach:cosmicreach:" + ver;
+        return "finalforeach:pre-alpha:" + ver;
     }
 
     /**

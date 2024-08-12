@@ -3,8 +3,8 @@ package com.github.puzzle;
 import org.objectweb.asm.Opcodes;
 
 public class Constants {
-    public static final String COSMIC_REACH_REPO = "https://github.com/CRModders/CosmicArchive/raw/main/";
-    public static final String COSMIC_REACH_JAR_NAME = "Cosmic Reach-[revision].jar";
+    public static final String COSMIC_REACH_REPO = "https://github.com/CRModders/CosmicArchive/raw/main/versions/pre-alpha";
+    public static final String COSMIC_REACH_JAR_NAME = "/versions/[group]/Cosmic Reach-[revision].jar";
 
     public static final String[] REPOS = new String[] {
             "https://jitpack.io", // Jitpack
