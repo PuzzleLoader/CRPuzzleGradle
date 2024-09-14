@@ -8,10 +8,9 @@ public class Constants {
 
     public static final String[] REPOS = new String[] {
             "https://jitpack.io", // Jitpack
-            "https://maven.quiltmc.org/repository/release", // Quilt
             "https://maven.fabricmc.net/", // Fabric
-            "https://repo.spongepowered.org/maven/" // Sponge
-//            "https://maven.crmodders.dev/releases" // CRModders
+            "https://libraries.minecraft.net", // Libraries
+            "https://maven.google.com/" // Google
     };
 
 
