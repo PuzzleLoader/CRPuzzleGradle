@@ -26,7 +26,7 @@ public abstract class RunClientTask extends JavaExec {
         files.addAll(JavaPluginHelper.getJavaComponent(getProject()).getMainFeature().getSourceSet().getRuntimeClasspath().getFiles());
         classpath(files);
 
-        getMainClass().set("com.github.puzzle.loader.launch.Piece");
+        getMainClass().set("com.github.puzzle.core.loader.launch.Piece");
     }
 
     @Override
