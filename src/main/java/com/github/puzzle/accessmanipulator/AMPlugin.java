@@ -21,11 +21,10 @@ public abstract class AMPlugin implements Runnable {
     protected abstract ConfigurationContainer getConfigurations();
 
     public static boolean hasManipulators = false;
+    public static Attribute<Boolean> manipulated = Attribute.of("manipulated", Boolean.class);
 
     @Override
     public void run() {
-        Attribute<Boolean> manipulated = Attribute.of("manipulated", Boolean.class);
-
         if (CosmicPuzzlePlugin.EXTENTION.getFabricAccessWidenerPath().isPresent()) {
             getProject().evaluationDependsOn(CosmicPuzzlePlugin.EXTENTION.getFabricAccessWidenerPath().getAsFile().get().getAbsolutePath());
             hasManipulators = true;
@@ -74,8 +73,9 @@ public abstract class AMPlugin implements Runnable {
             });
 
             getConfigurations().all(config -> {
-                if (config.isCanBeResolved())
-                    config.getAttributes().attribute(manipulated, true);
+                if (config.getSingleFile().exists())
+                    if (config.isCanBeResolved())
+                        config.getAttributes().attribute(manipulated, true);
             });
         });
     }
