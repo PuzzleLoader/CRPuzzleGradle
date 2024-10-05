@@ -73,9 +73,8 @@ public abstract class AMPlugin implements Runnable {
             });
 
             getConfigurations().all(config -> {
-                if (config.getSingleFile().exists())
-                    if (config.isCanBeResolved())
-                        config.getAttributes().attribute(manipulated, true);
+                if (config.isCanBeResolved())
+                    config.getAttributes().attribute(manipulated, true);
             });
         });
     }
