@@ -57,8 +57,8 @@ public abstract class PuzzleRepositoriesPlugin implements Runnable {
     public void setupProjectDependencies() {
         // Puzzle Loader
         if (getProject().getProperties().get("puzzle_loader_version") != null) {
-            if (getProject().getProperties().get("puzzle_loader_version").toString().contains("development")) return;
-            addImpl(PuzzleGradleExtension.getPuzzleLoader((String) getProject().getProperties().get("puzzle_loader_version")));
+            if (!getProject().getProperties().get("puzzle_loader_version").toString().contains("development")
+                addImpl(PuzzleGradleExtension.getPuzzleLoader((String) getProject().getProperties().get("puzzle_loader_version")));
         }
 
         // Puzzle Loader
