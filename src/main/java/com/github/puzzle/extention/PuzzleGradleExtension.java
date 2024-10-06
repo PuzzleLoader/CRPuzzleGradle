@@ -8,8 +8,8 @@ import org.gradle.api.file.RegularFileProperty;
  */
 public interface PuzzleGradleExtension {
     /** Name of the extension */
-    static String NAME = "puzzle_loader";
-    static ComparableVersion PUZZLE_VERSION_REFACTOR = new ComparableVersion("2.0.0");
+    String NAME = "puzzle_loader";
+    ComparableVersion PUZZLE_VERSION_REFACTOR = new ComparableVersion("2.0.0");
 
 
     /**

@@ -9,6 +9,8 @@ import org.gradle.util.internal.VersionNumber;
 
 import javax.inject.Inject;
 
+import java.util.Objects;
+
 import static com.github.puzzle.extention.PuzzleGradleExtension.PUZZLE_VERSION_REFACTOR;
 
 public abstract class PuzzleRepositoriesPlugin implements Runnable {
@@ -60,6 +62,7 @@ public abstract class PuzzleRepositoriesPlugin implements Runnable {
 
         // Puzzle Loader
         if (getProject().getProperties().get("puzzle_loader_version") != null) {
+            if (getProject().getProperties().get("puzzle_loader_version").toString().contains("development")) return;
             addImpl(PuzzleGradleExtension.getPuzzleLoader((String) getProject().getProperties().get("puzzle_loader_version")));
         }
 
@@ -68,19 +71,29 @@ public abstract class PuzzleRepositoriesPlugin implements Runnable {
             addImpl(PuzzleGradleExtension.getAccessManipulators((String) getProject().getProperties().get("access_manipulators_version")));
         }
 
-        ComparableVersion puzzleVersionString = new ComparableVersion(getProject().getProperties().get("puzzle_loader_version").toString());
+        if (getProject().getProperties().get("puzzle_loader_version") != null) {
+            if (Objects.equals(getProject().getProperties().get("puzzle_loader_version").toString(), "development-fabric"))
+                addImpl("net.fabricmc:sponge-mixin:0.15.3+mixin.0.8.7");
+            else if (Objects.equals(getProject().getProperties().get("puzzle_loader_version").toString(), "development-sponge"))
+                addImpl("org.spongepowered:mixin:0.8.5");
 
-        // Mixins
-        if (puzzleVersionString.compareTo(PUZZLE_VERSION_REFACTOR) > 0)
-            addImpl("net.fabricmc:sponge-mixin:0.15.3+mixin.0.8.7");
-        else
-            addImpl("org.spongepowered:mixin:0.8.5");
+            // Asm
+            addImpl("org.ow2.asm:asm:9.6");
+            addImpl("org.ow2.asm:asm-tree:9.6");
+            addImpl("org.ow2.asm:asm-util:9.6");
+            addImpl("org.ow2.asm:asm-analysis:9.6");
+            addImpl("org.ow2.asm:asm-commons:9.6");
 
-        // Asm
-        addImpl("org.ow2.asm:asm:9.6");
-        addImpl("org.ow2.asm:asm-tree:9.6");
-        addImpl("org.ow2.asm:asm-util:9.6");
-        addImpl("org.ow2.asm:asm-analysis:9.6");
-        addImpl("org.ow2.asm:asm-commons:9.6");
+            if (getProject().getProperties().get("puzzle_loader_version").toString().contains("development")) return;
+
+            ComparableVersion puzzleVersionString = new ComparableVersion(getProject().getProperties().get("puzzle_loader_version").toString());
+
+            // Mixins
+            if (puzzleVersionString.compareTo(PUZZLE_VERSION_REFACTOR) > 0)
+                addImpl("net.fabricmc:sponge-mixin:0.15.3+mixin.0.8.7");
+            else
+                addImpl("org.spongepowered:mixin:0.8.5");
+        }
+
     }
 }
