@@ -2,6 +2,7 @@ package com.github.puzzle.task.tasks;
 
 import com.github.puzzle.Constants;
 import com.github.puzzle.CosmicPuzzlePlugin;
+import org.apache.maven.artifact.versioning.ComparableVersion;
 import org.gradle.api.file.RegularFileProperty;
 import org.gradle.api.plugins.internal.JavaPluginHelper;
 import org.gradle.api.tasks.JavaExec;
@@ -11,6 +12,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import static com.github.puzzle.extention.PuzzleGradleExtension.PUZZLE_VERSION_REFACTOR;
 
 public abstract class RunClientTask extends JavaExec {
     public RunClientTask() {
@@ -26,7 +29,12 @@ public abstract class RunClientTask extends JavaExec {
         files.addAll(JavaPluginHelper.getJavaComponent(getProject()).getMainFeature().getSourceSet().getRuntimeClasspath().getFiles());
         classpath(files);
 
-        getMainClass().set("com.github.puzzle.core.loader.launch.Piece");
+        ComparableVersion puzzleVersionString = new ComparableVersion(getProject().getProperties().get("puzzle_loader_version").toString());
+
+        if (puzzleVersionString.compareTo(PUZZLE_VERSION_REFACTOR) > 0)
+            getMainClass().set("com.github.puzzle.core.loader.launch.Piece");
+        else
+            getMainClass().set("dev.crmodders.puzzle.core.launch.Piece");
     }
 
     @Override

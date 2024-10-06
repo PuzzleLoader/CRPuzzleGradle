@@ -1,5 +1,6 @@
 package com.github.puzzle.extention;
 
+import org.apache.maven.artifact.versioning.ComparableVersion;
 import org.gradle.api.file.RegularFileProperty;
 
 /**
@@ -8,6 +9,7 @@ import org.gradle.api.file.RegularFileProperty;
 public interface PuzzleGradleExtension {
     /** Name of the extension */
     static String NAME = "puzzle_loader";
+    static ComparableVersion PUZZLE_VERSION_REFACTOR = new ComparableVersion("2.0.0");
 
 
     /**

@@ -2,10 +2,14 @@ package com.github.puzzle.configuration;
 
 import com.github.puzzle.Constants;
 import com.github.puzzle.extention.PuzzleGradleExtension;
+import org.apache.maven.artifact.versioning.ComparableVersion;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
+import org.gradle.util.internal.VersionNumber;
 
 import javax.inject.Inject;
+
+import static com.github.puzzle.extention.PuzzleGradleExtension.PUZZLE_VERSION_REFACTOR;
 
 public abstract class PuzzleRepositoriesPlugin implements Runnable {
     @Inject
@@ -30,7 +34,7 @@ public abstract class PuzzleRepositoriesPlugin implements Runnable {
             });
 
             repo.content(content -> {
-                content.includeGroup("finalforeach");
+                content.includeModule("finalforeach", "cosmicreach");
             });
         });
 
@@ -64,8 +68,13 @@ public abstract class PuzzleRepositoriesPlugin implements Runnable {
             addImpl(PuzzleGradleExtension.getAccessManipulators((String) getProject().getProperties().get("access_manipulators_version")));
         }
 
+        ComparableVersion puzzleVersionString = new ComparableVersion(getProject().getProperties().get("puzzle_loader_version").toString());
+
         // Mixins
-        addImpl("net.fabricmc:sponge-mixin:0.15.3+mixin.0.8.7");
+        if (puzzleVersionString.compareTo(PUZZLE_VERSION_REFACTOR) > 0)
+            addImpl("net.fabricmc:sponge-mixin:0.15.3+mixin.0.8.7");
+        else
+            addImpl("org.spongepowered:mixin:0.8.5");
 
         // Asm
         addImpl("org.ow2.asm:asm:9.6");
