@@ -34,7 +34,7 @@ public abstract class RunClientTask extends JavaExec {
         if (puzzleVersionString.compareTo(PUZZLE_VERSION_REFACTOR) > 0)
             getMainClass().set("com.github.puzzle.core.loader.launch.Piece");
         else
-            getMainClass().set("dev.crmodders.puzzle.core.launch.Piece");
+            getMainClass().set("com.github.puzzle.loader.launch.Piece");
     }
 
     @Override
