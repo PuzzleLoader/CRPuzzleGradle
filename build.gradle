@@ -26,21 +26,21 @@ java {
 
 dependencies {
     // Gradle API
-    implementation(gradleApi())
+    shadow(gradleApi())
 
     // ASM
-    implementation("org.ow2.asm:asm:${asm_version}")
-    implementation("org.ow2.asm:asm-util:${asm_version}")       { transitive = false }
-    implementation("org.ow2.asm:asm-tree:${asm_version}")       { transitive = false }
-    implementation("org.ow2.asm:asm-analysis:${asm_version}")   { transitive = false }
-    implementation("org.ow2.asm:asm-commons:${asm_version}")    { transitive = false }
+    shadow("org.ow2.asm:asm:${asm_version}")
+    shadow("org.ow2.asm:asm-util:${asm_version}")       { transitive = false }
+    shadow("org.ow2.asm:asm-tree:${asm_version}")       { transitive = false }
+    shadow("org.ow2.asm:asm-analysis:${asm_version}")   { transitive = false }
+    shadow("org.ow2.asm:asm-commons:${asm_version}")    { transitive = false }
 
     // Access Manipulators
-    implementation("com.github.PuzzleLoader:access_manipulators:${access_manipulators_version}")
+    shadow("com.github.PuzzleLoader:access_manipulators:${access_manipulators_version}")
 
-    compileOnly("com.github.johnrengelman:shadow:8.1.1")
+    shadow("com.github.johnrengelman:shadow:8.1.1")
 
-    shadow("org.apache.maven:maven-artifact:3.6.3")
+    implementation("org.apache.maven:maven-artifact:3.6.3")
 }
 
 
@@ -78,14 +78,13 @@ jar {
     }
 }
 
-
 publishing {
     publications {
         maven(MavenPublication) {
             groupId = group
             artifactId = id
 
-            artifact source: jar, classifier: '', extension: 'jar'
+            artifact source: shadowJar, classifier: '', extension: 'jar'
         }
     }
 }
