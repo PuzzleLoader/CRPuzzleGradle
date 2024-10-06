@@ -10,6 +10,7 @@ public class Constants {
     public static final String[] REPOS = new String[] {
             "https://jitpack.io", // Jitpack
             "https://maven.fabricmc.net/", // Fabric
+            "https://repo.spongepowered.org/repository/maven-public/", // Sponge
             "https://libraries.minecraft.net", // Libraries
             "https://maven.google.com/" // Google
     };

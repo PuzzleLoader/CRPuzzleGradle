@@ -38,6 +38,16 @@ public interface PuzzleGradleExtension {
     RegularFileProperty getGameDir();
 
     /**
+     * Gets the Maven formatted string to Puzzle Paradox with the specified ${version}
+     * @param ver Version of PuzzleParadox
+     * @return Gradle dependency ready formatted string
+     * @since 1.1.0
+     */
+    static String getPuzzleParadox(String ver) {
+        return "com.github.PuzzleLoader:Paradox:" + ver;
+    }
+
+    /**
      * Gets the Maven formatted string to Puzzle Loader with the specified ${version}
      * @param ver Version of PuzzleLoader
      * @return Gradle dependency ready formatted string

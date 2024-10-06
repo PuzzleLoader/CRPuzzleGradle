@@ -5,6 +5,7 @@ import com.github.puzzle.extention.PuzzleGradleExtension;
 import org.apache.maven.artifact.versioning.ComparableVersion;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
+import org.gradle.api.artifacts.repositories.IvyArtifactRepository;
 
 import javax.inject.Inject;
 
@@ -31,9 +32,7 @@ public abstract class PuzzleRepositoriesPlugin implements Runnable {
                 pattern.artifact(Constants.COSMIC_REACH_SERVER_JAR_NAME);
             });
 
-            repo.metadataSources(sources -> {
-                sources.artifact();
-            });
+            repo.metadataSources(IvyArtifactRepository.MetadataSources::artifact);
 
             repo.content(content -> {
                 content.includeModule("finalforeach", "cosmicreach");
@@ -61,7 +60,12 @@ public abstract class PuzzleRepositoriesPlugin implements Runnable {
                 addImpl(PuzzleGradleExtension.getPuzzleLoader((String) getProject().getProperties().get("puzzle_loader_version")));
         }
 
-        // Puzzle Loader
+        // Puzzle Paradox
+        if (getProject().getProperties().get("puzzle_paradox_version") != null) {
+            addImpl(PuzzleGradleExtension.getPuzzleParadox((String) getProject().getProperties().get("puzzle_loader_version")));
+        }
+
+        // Access Manipulators
         if (getProject().getProperties().get("access_manipulators_version") != null) {
             addImpl(PuzzleGradleExtension.getAccessManipulators((String) getProject().getProperties().get("access_manipulators_version")));
         }
