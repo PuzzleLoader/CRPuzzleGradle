@@ -36,7 +36,7 @@ dependencies {
     shadow("org.ow2.asm:asm-commons:${asm_version}")    { transitive = false }
 
     // Access Manipulators
-    shadow("com.github.PuzzleLoader:access_manipulators:${access_manipulators_version}")
+    implementation("com.github.PuzzleLoader:access_manipulators:${access_manipulators_version}")
 
     shadow("com.github.johnrengelman:shadow:8.1.1")
 
