@@ -4,7 +4,8 @@ import org.objectweb.asm.Opcodes;
 
 public class Constants {
     public static final String COSMIC_REACH_REPO = "https://github.com/CRModders/CosmicArchive/raw/main/versions/pre-alpha";
-    public static final String COSMIC_REACH_JAR_NAME = "/[revision]/[classifier]/Cosmic Reach-[revision].jar";
+    public static final String COSMIC_REACH_CLIENT_JAR_NAME = "/[revision]/[classifier]/Cosmic Reach-[revision].jar";
+    public static final String COSMIC_REACH_SERVER_JAR_NAME = "/[revision]/[classifier]/Cosmic Reach-Server-[revision].jar";
 
     public static final String[] REPOS = new String[] {
             "https://jitpack.io", // Jitpack

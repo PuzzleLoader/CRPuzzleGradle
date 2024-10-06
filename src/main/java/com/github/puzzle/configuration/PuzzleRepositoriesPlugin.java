@@ -5,7 +5,6 @@ import com.github.puzzle.extention.PuzzleGradleExtension;
 import org.apache.maven.artifact.versioning.ComparableVersion;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
-import org.gradle.util.internal.VersionNumber;
 
 import javax.inject.Inject;
 
@@ -28,7 +27,8 @@ public abstract class PuzzleRepositoriesPlugin implements Runnable {
             repo.setUrl(Constants.COSMIC_REACH_REPO);
 
             repo.patternLayout(pattern -> {
-                pattern.artifact(Constants.COSMIC_REACH_JAR_NAME);
+                pattern.artifact(Constants.COSMIC_REACH_CLIENT_JAR_NAME);
+                pattern.artifact(Constants.COSMIC_REACH_SERVER_JAR_NAME);
             });
 
             repo.metadataSources(sources -> {
