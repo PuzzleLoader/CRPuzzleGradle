@@ -55,11 +55,6 @@ public abstract class PuzzleRepositoriesPlugin implements Runnable {
     }
 
     public void setupProjectDependencies() {
-        // Cosmic Reach
-        if (getProject().getProperties().get("cosmic_reach_version") != null) {
-            addImpl(PuzzleGradleExtension.getCosmicReach((String) getProject().getProperties().get("cosmic_reach_version")));
-        }
-
         // Puzzle Loader
         if (getProject().getProperties().get("puzzle_loader_version") != null) {
             if (getProject().getProperties().get("puzzle_loader_version").toString().contains("development")) return;

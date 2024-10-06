@@ -38,16 +38,6 @@ public interface PuzzleGradleExtension {
     RegularFileProperty getGameDir();
 
     /**
-     * Gets the Maven/Ivy formatted string to Cosmic Reach with the specified ${version}
-     * @param ver Version of Cosmic Reach
-     * @return Gradle dependency ready formatted string
-     * @since 1.0.0
-     */
-    static String getCosmicReach(String ver) {
-        return "finalforeach:pre-alpha:" + ver;
-    }
-
-    /**
      * Gets the Maven formatted string to Puzzle Loader with the specified ${version}
      * @param ver Version of PuzzleLoader
      * @return Gradle dependency ready formatted string
