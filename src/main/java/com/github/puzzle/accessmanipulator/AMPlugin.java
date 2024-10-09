@@ -51,8 +51,10 @@ public abstract class AMPlugin implements Runnable {
 
             proj.getDependencies().registerTransform(AMClassTransformer.class, param -> {
 
-                param.getFrom().attribute(manipulated, false);
-                param.getTo().attribute(manipulated, true);
+                try {
+                    param.getFrom().attribute(manipulated, false);
+                    param.getTo().attribute(manipulated, true);
+                } catch (Exception ignore) {}
 
                 ListProperty<File> manipulators = this.getProject().getObjects().listProperty(File.class);
                 try {

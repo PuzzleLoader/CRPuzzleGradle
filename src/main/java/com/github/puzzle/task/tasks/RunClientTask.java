@@ -29,12 +29,19 @@ public abstract class RunClientTask extends JavaExec {
         files.addAll(JavaPluginHelper.getJavaComponent(getProject()).getMainFeature().getSourceSet().getRuntimeClasspath().getFiles());
         classpath(files);
 
-        ComparableVersion puzzleVersionString = new ComparableVersion(getProject().getProperties().get("puzzle_loader_version").toString());
 
-        if (puzzleVersionString.compareTo(PUZZLE_VERSION_REFACTOR) > 0)
+        if (getProject().getProperties().get("puzzle_loader_version").toString().contains("development-fabric")) {
             getMainClass().set("com.github.puzzle.core.loader.launch.Piece");
-        else
+        } else if (getProject().getProperties().get("puzzle_loader_version").toString().contains("development-spong")) {
             getMainClass().set("com.github.puzzle.loader.launch.Piece");
+        } else {
+            ComparableVersion puzzleVersionString = new ComparableVersion(getProject().getProperties().get("puzzle_loader_version").toString());
+
+            if (puzzleVersionString.compareTo(PUZZLE_VERSION_REFACTOR) > 0)
+                getMainClass().set("com.github.puzzle.core.loader.launch.Piece");
+            else
+                getMainClass().set("com.github.puzzle.loader.launch.Piece");
+        }
     }
 
     @Override

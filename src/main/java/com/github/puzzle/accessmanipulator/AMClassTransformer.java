@@ -60,10 +60,11 @@ public abstract class AMClassTransformer implements TransformAction<AMClassTrans
         else
             System.out.println("Ignoring File " + input.getName());
 
+        if (!input.exists()) {
+            return;
+        }
+
         try {
-            if (!input.exists()) {
-                return;
-            }
             ZipInputStream inputJar = new ZipInputStream(new FileInputStream(input));
             File transformedFile = outputs.file(transformedName);
             if (transformedFile.exists()) transformedFile.delete();
